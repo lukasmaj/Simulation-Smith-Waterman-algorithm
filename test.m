@@ -1,23 +1,23 @@
 function test()
-    AImageImage = ['X','G','G','T','T','G','A','C','T','A'];
-    BImageImage = ['Y','T','G','T','T','A','C','G','G'];
+    AImage = ['X','G','G','T','T','G','A','C','T','A'];
+    BImage = ['Y','T','G','T','T','A','C','G','G'];
     W1=2 ;
     
-    ScoringMatrix = FillScoringMatrix(AImageImage, BImageImage, W1);
-    MaxScore = ComputeMaxScore (ScoringMatrix, AImageImage, BImageImage);    
+    ScoringMatrix = FillScoringMatrix(AImage, BImage, W1);
+    MaxScore = ComputeMaxScore (ScoringMatrix, AImage, BImage);    
     Find = ComputeAligment(ScoringMatrix, MaxScore);
 
     for i=1:length(Find)
         a=Find(7-i+1,1,1);
         b=Find(7-i+1,1,2);
-        disp([AImageImage(a),' ',BImageImage(b)])
+        disp([AImage(a),' ',BImage(b)])
     end
 end
 
-function ret = ComputeMaxScore (ScoringMatrix, AImageImage, BImageImage)
+function ret = ComputeMaxScore (ScoringMatrix, AImage, BImage)
     MaxScore=[0,0,0];
-    for i = 2:length(AImageImage)
-        for j = 2:length(BImageImage)
+    for i = 2:length(AImage)
+        for j = 2:length(BImage)
             if ScoringMatrix(i,j) > MaxScore(1)
                MaxScore=[ScoringMatrix(i,j),i,j]; 
             end
@@ -26,11 +26,11 @@ function ret = ComputeMaxScore (ScoringMatrix, AImageImage, BImageImage)
     ret = MaxScore;
 end
 
-function ret = FillScoringMatrix(AImageImage, BImageImage, Wk)
-    ScoringMatrix=zeros(length(AImageImage),length(BImageImage));
-    for i = 2:length(AImageImage)
-        for j = 2:length(BImageImage)
-            Cross = ScoringCross(ScoringMatrix,i,j,AImageImage,BImageImage);
+function ret = FillScoringMatrix(AImage, BImage, Wk)
+    ScoringMatrix=zeros(length(AImage),length(BImage));
+    for i = 2:length(AImage)
+        for j = 2:length(BImage)
+            Cross = ScoringCross(ScoringMatrix,i,j,AImage,BImage);
             Up    = ScoringUp(ScoringMatrix,i,j,Wk);
             Left  = ScoringLeft(ScoringMatrix,i,j,Wk);
             D = 0;
@@ -65,7 +65,7 @@ end
 
 function ret = ScoringUp (ScoringMatrix,i,j,Wk)
     ret = ScoringMatrix(i-1,j)-Wk;
-end
+end                            
 
 
 function ret = ScoringLeft (ScoringMatrix,i,j,Wk)
