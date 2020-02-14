@@ -3,7 +3,7 @@ function test()
     BImage = ['Y','T','G','T','T','A','C','G','G'];
     W1=2 ;
     
-    ScoringMatrix = FillScoringMatrix(AImage, BImage, W1);
+    ScoringMatrix = FillScoringMatrix(AImage, BImage, W1)
     MaxScore = ComputeMaxScore (ScoringMatrix, AImage, BImage);    
     Find = ComputeAligment(ScoringMatrix, MaxScore);
 
@@ -27,7 +27,7 @@ function ret = ComputeMaxScore (ScoringMatrix, AImage, BImage)
 end
 
 function ret = FillScoringMatrix(AImage, BImage, Wk)
-    ScoringMatrix=zeros(length(AImage),length(BImage));
+    ScoringMatrix=zeros(length(AImage),length(BImage))
     for i = 2:length(AImage)
         for j = 2:length(BImage)
             Cross = ScoringCross(ScoringMatrix,i,j,AImage,BImage);
