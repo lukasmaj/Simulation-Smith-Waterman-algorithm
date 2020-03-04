@@ -7,12 +7,10 @@ class ImageUtils:
         print "Init ImageUtils"
 
     def getImages(self):
-        imgA = cv.imread('img/imgA.png',0)
-        a = imgA[60]
-        b = len(a)
-        c = a[5]
-        imgB = cv.imread('img/imgB',0)
+        imgA = cv.imread('img/a1.png', 0)
 
+        imgB = cv.imread('img/b1.png', 0)
+        return imgA, imgB
 
 
 __img_utils = ImageUtils()
