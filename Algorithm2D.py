@@ -111,8 +111,8 @@ class Algorithm2D:
 
         AImage2D = utils.arrayToMatrix(AImage_map, m=m, n=n)
         BImage2D = utils.arrayToMatrix(BImage_map, m=m, n=n)
-        x = numpy.asarray(AImage2D).astype(numpy.uint8).rot90(3)
-        y = numpy.asarray(BImage2D).astype(numpy.uint8).rot90(3)
+        x = numpy.asarray(AImage2D).astype(numpy.uint8)
+        y = numpy.asarray(BImage2D).astype(numpy.uint8)
         return x, y
        # cv.imshow("AImage", x)
        # cv.imshow("BImage", y)
