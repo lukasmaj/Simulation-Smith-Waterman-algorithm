@@ -37,6 +37,7 @@ class Algorithm2D:
     def computeMaxScore(self,scoringMatrix):
         maxScore = 0
         n, m = len(scoringMatrix[0]), len(scoringMatrix)
+        posA, posB = 1, 1
         for i in range(0, m):
             for j in range(0, n):
                 if scoringMatrix[i][j] > maxScore:
@@ -92,7 +93,7 @@ class Algorithm2D:
 
     def alignSequence(self, AImage2D, BImage2D):
         print "Align Sequence"
-        m,n = AImage2D.shape
+        m, n = AImage2D.shape
         AImage = utils.matrixToArray(AImage2D)
         BImage = utils.matrixToArray(BImage2D)
         scoringMatrix = self.fillScoringMatrix(AImage=AImage, BImage=BImage)
@@ -108,17 +109,16 @@ class Algorithm2D:
                 AImage_map[a] = AImage[a]
                 BImage_map[b] = BImage[b]
 
-
-        AImage2D = utils.arrayToMatrix(AImage_map,m=m, n=n)
+        AImage2D = utils.arrayToMatrix(AImage_map, m=m, n=n)
         BImage2D = utils.arrayToMatrix(BImage_map, m=m, n=n)
-        x = numpy.asarray(AImage2D).astype(numpy.uint8)
-        y = numpy.asarray(BImage2D).astype(numpy.uint8)
-        cv.imshow("AImage", x)
-        cv.imshow("BImage", y)
-        cv.imwrite("img/aa1.png",x)
-        cv.imwrite("img/bb1.png", y)
-        cv.waitKey()
-
+        x = numpy.asarray(AImage2D).astype(numpy.uint8).rot90(3)
+        y = numpy.asarray(BImage2D).astype(numpy.uint8).rot90(3)
+        return x, y
+       # cv.imshow("AImage", x)
+       # cv.imshow("BImage", y)
+        #cv.imwrite("img/aa1.png", x)
+        #cv.imwrite("img/bb1.png", y)
+        #cv.waitKey()
 
         #self.exposeSequence(sequence=findSequence, AImage=AImage, BImage=BImage)
         # utils.exposeMatrix(scoringMatrix)
