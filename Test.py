@@ -61,19 +61,22 @@ class TestClass:
 
     def test(self):
         #sm_alg.alignSequence(AImage=self.AImage, BImage=self.BImage)
+        n, m = 1, 150
         _imgA, _imgB = imgu.getImages()
-        retA, retB = _imgA.copy(), _imgB.copy()
-        for i in range(0, 15):
-            imgA = self.cutImage(image=_imgA, byM=5, byN=5, numberOfImage=i)
-            imgB = self.cutImage(image=_imgB, byM=5, byN=5, numberOfImage=i)
-            x, y = alg_2d.alignSequence(AImage2D=imgA, BImage2D=imgB)
-            retA = self.mergeImage(part=x, whole=_imgA, numberOfImage=i)
-            retB = self.mergeImage(part=y, whole=_imgB, numberOfImage=i)
+        # retA, retB = _imgA.copy(), _imgA.copy()
+        disparity = _imgA.copy()
+        for i in range(0, 220):
+            imgA = self.cutImage(image=_imgA, byM=m, byN=n, numberOfImage=i)
+            imgB = self.cutImage(image=_imgB, byM=m, byN=n, numberOfImage=i)
+            x = alg_2d.alignSequence(AImage2D=imgA, BImage2D=imgB)
+            disparity = self.mergeImage(part=x, whole=disparity, numberOfImage=i)
+            # retA = self.mergeImage(part=x, whole=_imgA, numberOfImage=i)
+            # retB = self.mergeImage(part=y, whole=_imgB, numberOfImage=i)
 
-        cv.imshow("AImage", retA)
-        cv.imshow("BImage", retB)
-        cv.imwrite("img/aa1.png", retA)
-        cv.imwrite("img/bb1.png", retB)
+        cv.imshow("AImage", disparity)
+        #cv.imshow("BImage", retB)
+        #cv.imwrite("img/aa1.png", retA)
+        cv.imwrite("img/bb1.png", disparity)
         cv.waitKey()
 
 if __name__ == "__main__":

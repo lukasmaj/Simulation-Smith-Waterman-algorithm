@@ -8,7 +8,8 @@ class Algorithm2D:
 
     def __init__(self):
         print "Algorithm 2D"
-        self.Wk = 2
+        self.Wk = 5
+        self.eps = 5
 
     def fillScoringMatrix(self, AImage, BImage):
         n, m = len(AImage), len(BImage)
@@ -58,8 +59,8 @@ class Algorithm2D:
 
             if cross == maxNexScore or (posA-1 == 1) or (posB == 1):
                 seqence.append([posA, posB])
-                posA = posA -1
-                posB = posB -1
+                posA = posA - 1
+                posB = posB - 1
             elif up == maxNexScore:
                 seqence.append([None, posB])
                 posA = posA
@@ -71,10 +72,10 @@ class Algorithm2D:
         return seqence
 
     def score(self, a, b):
-        if a == b:
-            return 3
+        if abs(int(a) - int(b)) < self.eps:
+            return 7
         else:
-            return -3
+            return -7
     def exposeSequence(self, sequence, AImage, BImage):
         stra=""
         strb=""
@@ -96,32 +97,31 @@ class Algorithm2D:
         m, n = AImage2D.shape
         AImage = utils.matrixToArray(AImage2D)
         BImage = utils.matrixToArray(BImage2D)
+
         scoringMatrix = self.fillScoringMatrix(AImage=AImage, BImage=BImage)
         maxScore = self.computeMaxScore(scoringMatrix=scoringMatrix)
         findSequence = self.computeBacktrack(scoringMatrix=scoringMatrix, maxScore=maxScore)
-        AImage_map = [178 for i in range(0, len(AImage))]
-        BImage_map = [178 for i in range(0, len(BImage))]
+        #AImage_map = [178 for i in range(0, len(AImage))]
+        #BImage_map = [178 for i in range(0, len(BImage))]
+        Disparity_map = [0 for i in range(0, len(AImage))]
         for i in range(0, len(findSequence)):
             a, b = findSequence[i]
             if a is None or b is None:
                 continue
             else:
-                AImage_map[a] = AImage[a]
-                BImage_map[b] = BImage[b]
+                Disparity_map[b] = 127 + (a-b)
+                #print "xD: {0}".format(a-b)
+                #assert (a-b)
+                #AImage_map[a] = AImage[a]
+                #BImage_map[b] = BImage[b]
 
-        AImage2D = utils.arrayToMatrix(AImage_map, m=m, n=n)
-        BImage2D = utils.arrayToMatrix(BImage_map, m=m, n=n)
-        x = numpy.asarray(AImage2D).astype(numpy.uint8)
-        y = numpy.asarray(BImage2D).astype(numpy.uint8)
-        return x, y
-       # cv.imshow("AImage", x)
-       # cv.imshow("BImage", y)
-        #cv.imwrite("img/aa1.png", x)
-        #cv.imwrite("img/bb1.png", y)
-        #cv.waitKey()
-
-        #self.exposeSequence(sequence=findSequence, AImage=AImage, BImage=BImage)
-        # utils.exposeMatrix(scoringMatrix)
+        #AImage2D = utils.arrayToMatrix(AImage_map, m=m, n=n)
+        #BImage2D = utils.arrayToMatrix(BImage_map, m=m, n=n)
+        Disparity2D = utils.arrayToMatrix(Disparity_map, m=m, n=n)
+        #x = numpy.asarray(AImage2D).astype(numpy.uint8)
+        #y = numpy.asarray(BImage2D).astype(numpy.uint8)
+        ret_disparity = numpy.asarray(Disparity2D).astype(numpy.uint8)
+        return ret_disparity
 
 __algorithm2d = Algorithm2D()
 alignSequence = __algorithm2d.alignSequence

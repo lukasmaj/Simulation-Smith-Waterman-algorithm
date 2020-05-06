@@ -15,10 +15,10 @@ class Hirschberg:
         score = [[0 for i in range(0, n+1)] for j in range(0, n + 1)]
         score[0][0]=0
         for j in range(1, n):
-            score[0][j]=score[0][j-1] + self.Ins(Y[j]);
+            score[0][j] = score[0][j-1] + self.Ins(Y[j]);
         for i in range(1, m):
-            score[i][0]=score(i-1,0) + self.Del(X[i])
-            for j in range(1,n):
+            score[i][0] = score(i-1,0) + self.Del(X[i])
+            for j in range(1, n):
                 scoreSub = score[i - 1][j - 1] + self.Sub(X[i], Y[j])
                 scoreDel = score[i - 1] [j] + self.Del(X[i])
                 scoreIns = score[i][j - 1] + self.Ins(Y[j])
